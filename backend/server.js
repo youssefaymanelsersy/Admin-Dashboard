@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { errorHandler } from "./middleware/error.middleware.js";
+import cors from "cors";
 
 import express from "express";
 import authRoutes from "./modules/auth/auth.routes.js   ";
@@ -11,6 +12,17 @@ import logsRoutes from "./modules/logs/logs.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(
+    cors({
+        origin: [
+            "http://localhost:5173",
+            "https://increased-jody-youssef-org-43ede976.koyeb.app"
+        ],
+        credentials: true,
+    })
+);
+
 
 // middleware to parse JSON
 app.use(express.json());
