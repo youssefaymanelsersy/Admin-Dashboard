@@ -3,7 +3,7 @@ import { errorHandler } from "./middleware/error.middleware.js";
 import cors from "cors";
 
 import express from "express";
-import authRoutes from "./modules/auth/auth.routes.js   ";
+import authRoutes from "./modules/auth/auth.routes.js";
 import authTestRoutes from "./modules/auth/auth.test.routes.js";
 import usersRoutes from "./modules/users/users.routes.js";
 import statsRoutes from "./modules/stats/stats.routes.js";
@@ -17,7 +17,7 @@ app.use(
     cors({
         origin: [
             "http://localhost:5173",
-            "https://increased-jody-youssef-org-43ede976.koyeb.app"
+            "https://1439a020-784f-420d-9170-8b93309c04ae.e1-eu-north-azure.choreoapps.dev"
         ],
         credentials: true,
     })
