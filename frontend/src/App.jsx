@@ -112,9 +112,10 @@ function Dashboard({ onLogout }) {
     }
   }
 
-  loadUsers();
   useEffect(() => {
-  }, []);
+    loadUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onLogout]);
 
 
   async function toggleUser(u) {

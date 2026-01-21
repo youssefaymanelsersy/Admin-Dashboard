@@ -1,21 +1,34 @@
-const API_BASE = "https://1439a020-784f-420d-9170-8b93309c04ae.e1-eu-north-azure.choreoapps.dev";
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || "http://localhost:3000").replace(/\/$/, "");
 
 export async function apiRequest(path, options = {}) {
     const token = localStorage.getItem("token");
+    const url = `${API_BASE}${path.startsWith("/") ? "" : "/"}${path}`;
 
-    const res = await fetch(API_BASE + path, {
-        ...options,
-        headers: {
-            "Content-Type": "application/json",
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
-            ...options.headers,
-        },
-    });
+    let res;
 
-    const data = await res.json();
+    try {
+        res = await fetch(url, {
+            ...options,
+            headers: {
+                "Content-Type": "application/json",
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                ...options.headers,
+            },
+        });
+    } catch (err) {
+        throw new Error("Network error: unable to reach API " + err.message);
+    }
+
+    let data = null;
+    try {
+        data = await res.json();
+    } catch (err) {
+        // Non-JSON response, leave data as null
+        throw new Error("Invalid JSON response from API" + err.message);
+    }
 
     if (!res.ok) {
-        throw new Error(data.error || "Request failed");
+        throw new Error((data && data.error) || `Request failed (${res.status})`);
     }
 
     return data;

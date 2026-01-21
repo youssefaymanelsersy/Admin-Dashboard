@@ -13,15 +13,23 @@ import logsRoutes from "./modules/logs/logs.routes.js";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(
-    cors({
-        origin: [
-            "http://localhost:5173",
-            "https://1439a020-784f-420d-9170-8b93309c04ae.e1-eu-north-azure.choreoapps.dev"
-        ],
-        credentials: true,
-    })
-);
+const corsOptions = {
+    origin: [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://localhost:5173",
+        "http://0.0.0.0:5173",
+        "https://0.0.0.0:5173",
+        "https://1439a020-784f-420d-9170-8b93309c04ae.e1-eu-north-azure.choreoapps.dev",
+    ],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 
 // middleware to parse JSON
