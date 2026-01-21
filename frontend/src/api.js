@@ -1,4 +1,4 @@
-const API_BASE = "https://increased-jody-youssef-org-43ede976.koyeb.app";
+const API_BASE = "https://1439a020-784f-420d-9170-8b93309c04ae.e1-eu-north-azure.choreoapps.dev";
 
 export async function apiRequest(path, options = {}) {
     const token = localStorage.getItem("token");
