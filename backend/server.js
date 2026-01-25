@@ -23,6 +23,8 @@ app.use(
     }),
 );
 
+app.options(/.*/, cors());
+
 // middleware
 app.use(express.json());
 
