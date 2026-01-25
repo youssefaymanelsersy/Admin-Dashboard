@@ -12,22 +12,16 @@ import logsRoutes from "./modules/logs/logs.routes.js";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ✅ Configure CORS middleware
+// ✅ CORS (Express 5 safe)
 app.use(
     cors({
-        origin: [
-            "http://localhost:5173",
-            // add prod frontend later if needed
-        ],
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        origin: ["http://localhost:5173"],
+        methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type", "Authorization"],
     })
 );
 
-// ✅ Handle preflight explicitly
-app.options("*", cors());
-
-// middleware to parse JSON
+// middleware
 app.use(express.json());
 
 // routes
@@ -37,15 +31,12 @@ app.use("/users", usersRoutes);
 app.use("/stats", statsRoutes);
 app.use("/logs", logsRoutes);
 
-// error handler (must be last)
+// error handler
 app.use(errorHandler);
 
-// health check
+// health
 app.get("/health", (req, res) => {
-    res.json({
-        status: "ok",
-        message: "Backend is running",
-    });
+    res.json({ status: "ok" });
 });
 
 app.listen(PORT, () => {
