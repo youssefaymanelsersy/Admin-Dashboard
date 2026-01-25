@@ -41,9 +41,20 @@ app.use("/logs", logsRoutes);
 // error handler
 app.use(errorHandler);
 
-// health
-app.get("/health", (req, res) => {
-    res.json({ status: "ok" });
+app.get("/health", async (req, res) => {
+    try {
+        const [rows] = await pool.query(
+            "SELECT VERSION() AS version, DATABASE() AS db"
+        );
+
+        res.json({
+            ok: true,
+            database: rows[0],
+            environment: process.env.NODE_ENV || "development"
+        });
+    } catch (err) {
+        res.status(503).json({ ok: false, error: err.message });
+    }
 });
 
 app.listen(PORT, () => {
