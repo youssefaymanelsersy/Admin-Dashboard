@@ -8,7 +8,8 @@ import authTestRoutes from "./modules/auth/auth.test.routes.js";
 import usersRoutes from "./modules/users/users.routes.js";
 import statsRoutes from "./modules/stats/stats.routes.js";
 import logsRoutes from "./modules/logs/logs.routes.js";
-import rateLimiter from "express-rate-limit";
+import { rateLimiter } from "./middleware/rateLimit.middleware.js";
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
