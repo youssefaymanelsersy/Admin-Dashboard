@@ -9,6 +9,7 @@ import usersRoutes from "./modules/users/users.routes.js";
 import statsRoutes from "./modules/stats/stats.routes.js";
 import logsRoutes from "./modules/logs/logs.routes.js";
 import { rateLimiter } from "./middleware/rateLimit.middleware.js";
+import { pool } from "./config/db.js";
 
 
 const app = express();
