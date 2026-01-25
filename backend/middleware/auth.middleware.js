@@ -1,6 +1,11 @@
 import jwt from "jsonwebtoken";
 
 export function requireAuth(req, res, next) {
+    // ✅ ALLOW CORS PREFLIGHT
+    if (req.method === "OPTIONS") {
+        return next();
+    }
+
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -13,7 +18,7 @@ export function requireAuth(req, res, next) {
 
     try {
         const payload = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = payload; // { userId, role }
+        req.user = payload;
         next();
     } catch (err) {
         const error = new Error("Invalid or expired token");
@@ -24,6 +29,11 @@ export function requireAuth(req, res, next) {
 
 export function requireRole(role) {
     return (req, res, next) => {
+        // OPTIONS never has user
+        if (req.method === "OPTIONS") {
+            return next();
+        }
+
         if (req.user.role !== role) {
             const err = new Error("Forbidden");
             err.status = 403;
