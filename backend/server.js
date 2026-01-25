@@ -15,10 +15,11 @@ const PORT = process.env.PORT || 3000;
 // ✅ CORS (Express 5 safe)
 app.use(
     cors({
-        origin: ["http://localhost:5173"],
-        methods: ["GET", "POST", "PUT", "DELETE"],
+        origin: true, // 🔑 allow ALL origins (Choreo-safe)
+        credentials: false,
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         allowedHeaders: ["Content-Type", "Authorization"],
-    })
+    }),
 );
 
 // middleware
